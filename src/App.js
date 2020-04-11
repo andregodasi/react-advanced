@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Suspense } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
@@ -5,7 +7,9 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 const NewProductsView = React.lazy(() => import("./views/NewProductsView"));
 const ProductListView = React.lazy(() => import("./views/ProductListView"));
 
-function App() {
+type Props = {};
+
+function App(props: Props) {
   return (
     <div className="App">
       <Router>
