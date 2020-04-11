@@ -1,4 +1,4 @@
-const api = "http://localhost:3002/api/react-advanced";
+const api = "http://localhost:3002/api/react-advanced/";
 
 export const ApiService = {
   get(endpoint) {
