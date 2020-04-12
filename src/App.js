@@ -1,17 +1,15 @@
-// @flow
-
 import React, { Suspense } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import ClickCounter from "./components/ClickCounter";
 
 const NewProductsView = React.lazy(() => import("./views/NewProductsView"));
 const ProductListView = React.lazy(() => import("./views/ProductListView"));
 
-type Props = {};
-
-function App(props: Props) {
+function App() {
   return (
     <div className="App">
+      <ClickCounter />
       <Router>
         <div>
           <header>
