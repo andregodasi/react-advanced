@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Channel } from "../services/EventService";
+import { FormattedNumber } from "react-intl";
 
 export default function ProductList(props) {
   const [products, setProducts] = useState([]);
@@ -21,7 +22,13 @@ export default function ProductList(props) {
             <button onClick={() => remove(product)}>X</button>
             <img src={product.image} alt={product.description} />
             <div>{product.description}</div>
-            <div>{product.price}</div>
+            <div>
+              <FormattedNumber
+                value={product.price}
+                minimumFractionDigits={2}
+                maximumFractionDigits={2}
+              />
+            </div>
           </li>
         ))}
     </ul>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ProductsService } from "../services/ProductService";
+import { FormattedMessage } from "react-intl";
 
 export default function NewProductsView() {
   const [product, setProduct] = useState({
@@ -24,10 +25,14 @@ export default function NewProductsView() {
   };
   return (
     <div>
-      <h1>Novo Produto</h1>
+      <h1>
+        <FormattedMessage defaultMessage="New Product" id="product.new.title" />
+      </h1>
       <form className="product-form" onSubmit={(event) => handleSubmit(event)}>
         <label>
-          <span>Imagem</span>
+          <span>
+            <FormattedMessage defaultMessage="Image" id="product.new.image" />
+          </span>
           <input
             name="image"
             onChange={(event) => handleChange(event)}
@@ -36,7 +41,12 @@ export default function NewProductsView() {
           />
         </label>
         <label>
-          <span>Descrição</span>
+          <span>
+            <FormattedMessage
+              defaultMessage="Description"
+              id="product.new.description"
+            />
+          </span>
           <input
             name="description"
             onChange={(event) => handleChange(event)}
@@ -45,7 +55,9 @@ export default function NewProductsView() {
           />
         </label>
         <label>
-          <span>Preço</span>
+          <span>
+            <FormattedMessage defaultMessage="Price" id="product.new.price" />
+          </span>
           <input
             name="price"
             onChange={(event) => handleChange(event)}
@@ -53,7 +65,12 @@ export default function NewProductsView() {
             value={product.price}
           />
         </label>
-        <button type="submit">Criar produto</button>
+        <button type="submit">
+          <FormattedMessage
+            defaultMessage="Create Product"
+            id="product.new.create"
+          />
+        </button>
       </form>
     </div>
   );

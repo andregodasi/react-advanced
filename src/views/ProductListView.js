@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { ProductsService } from "../services/ProductService";
 import { Channel } from "../services/EventService";
 import ProductList from "../components/ProductList";
+import { FormattedMessage } from "react-intl";
 
 export default function ProductListView() {
   const [products, setProducts] = useState(null);
@@ -12,10 +13,10 @@ export default function ProductListView() {
   }, []);
 
   useEffect(() => {
-    if(products) {
+    if (products) {
       Channel.on("product:remove", remove);
     }
-   
+
     return () => {
       Channel.removeListener("product:remove", remove);
     };
@@ -27,19 +28,23 @@ export default function ProductListView() {
     setProducts([...list]);
   };
 
-  const remove = (productId) => {
-    debugger;
+  const remove = async (productId) => {
     const productIndex = products.findIndex(
       (product) => product.id === productId
     );
-   /*  await ProductsService.remove(productId); */
+    await ProductsService.remove(productId);
     products.splice(productIndex, 1);
     setProducts([...products]);
   };
-  
+
   return (
     <div>
-      <h1>Lista de Produtos</h1>
+      <h1>
+        <FormattedMessage
+          defaultMessage="Products list"
+          id="products.list.title"
+        />
+      </h1>
       <ProductList products={products} />
     </div>
   );

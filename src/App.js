@@ -1,42 +1,70 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import ClickCounter from "./components/ClickCounter";
+import { IntlProvider, FormattedMessage } from "react-intl";
+import messages from "./i18n/messages";
 
 const NewProductsView = React.lazy(() => import("./views/NewProductsView"));
 const ProductListView = React.lazy(() => import("./views/ProductListView"));
 
 function App() {
+  const [currentLanguage, setCurrentLanguage] = useState(
+    localStorage.getItem("lang") || "pt"
+  );
+
+  function changeLanguage(lang) {
+    console.log(lang);
+    localStorage.setItem("lang", lang);
+    setCurrentLanguage(lang);
+  }
   return (
     <div className="App">
-      <ClickCounter />
-      <Router>
-        <div>
-          <header>
-            <ul className="link-list">
-              <li>
-                <Link to={"/"}>Novo</Link>
-              </li>
-              <li>
-                <Link to={"/list"}>Lista</Link>
-              </li>
-            </ul>
-          </header>
-        </div>
-        <div>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Route
-              path={"/"}
-              exact
-              component={(props) => <NewProductsView {...props} />}
-            />
-            <Route
-              path={"/list"}
-              component={(props) => <ProductListView {...props} />}
-            />
-          </Suspense>
-        </div>
-      </Router>
+      <IntlProvider
+        locale={currentLanguage}
+        messages={messages[currentLanguage]}
+      >
+        <Router>
+          <div>
+            <header>
+              <ul className="link-list">
+                <li>
+                  <Link to={"/"}>
+                    <FormattedMessage defaultMessage="New" id="menu.new" />
+                  </Link>
+                </li>
+                <li>
+                  <Link to={"/list"}>
+                    <FormattedMessage defaultMessage="List" id="menu.list" />
+                  </Link>
+                </li>
+              </ul>
+              <ul className="lang-list">
+                <li>
+                  <button onClick={() => changeLanguage("pt")}>
+                    Português
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => changeLanguage("en")}>English</button>
+                </li>
+              </ul>
+            </header>
+          </div>
+          <div>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Route
+                path={"/"}
+                exact
+                component={(props) => <NewProductsView {...props} />}
+              />
+              <Route
+                path={"/list"}
+                component={(props) => <ProductListView {...props} />}
+              />
+            </Suspense>
+          </div>
+        </Router>
+      </IntlProvider>
     </div>
   );
 }
